@@ -1,23 +1,23 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector} from 'react-redux';
 
-const mapStateToProps = reduxState => ({
-    reduxState,
-});
 
-class PlantList extends Component {
-    componentDidMount() {
-        // use component did mount to dispatch an action to request the plantList from the API
-    }
+function PlantList() {
+    const dispatch = useDispatch();
 
-    render() {
-        return (
-            <div>
-                <h3>This is the plant list</h3>
-                <pre>{JSON.stringify(this.props.reduxState)}</pre>
-            </div>
-        );
-    }
+    const reduxState = useSelector(store => store);
+
+    useEffect(() => {
+        console.log('component did mount');
+        // dispatch an action to request the plantList from the API
+    }, []); 
+
+    return (
+        <div>
+            <h3>This is the plant list</h3>
+            <pre>{JSON.stringify(reduxState)}</pre>
+        </div>
+    );
 }
 
-export default connect(mapStateToProps)(PlantList);
+export default PlantList;
