@@ -1,52 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React, {useState}from 'react';
+import { useDispatch } from 'react-redux';
 
-const mapStateToProps = reduxState => ({
-    reduxState,
-});
+const NewPlantForm = () => {
+    const dispatch = useDispatch();
+    let [newPlant, setPlant] = useState({id: 4, name: ''});
 
-class NewPlantForm extends Component {
-    state = {
-        newPlant: {
-            id: 4,
-            name: ''
-        }
+    const handleNameChange = (event) => {
+        console.log('event happened')
+        setPlant({...newPlant, name: event.target.value})
     }
 
-    handleNameChange = event => {
-        console.log('event happended')
-        this.setState({
-            newPlant: {
-                ...this.state.newPlant,
-                name: event.target.value,
-            }
-        });
-    }
-
-    addNewPlant = event => {
+    const addNewPlant = event => {
         event.preventDefault();
-        this.props.dispatch({ type: 'ADD_PLANT', payload: this.state.newPlant })
-        this.setState({
-            newPlant: {
-                id: this.state.newPlant.id + 1,
-                name: '',
-            }
-        });
+        dispatch({ type: 'ADD_PLANT', payload: newPlant });
+        setPlant({id:newPlant.id + 1, name: ''});
     }
-
-    render() {
-        return (
-            <div>
-                <h3>This is the form</h3>
-                <pre>{JSON.stringify(this.state)}</pre>
-                <form onSubmit={this.addNewPlant}>
-                    <input type='text' value={this.state.newPlant.name} onChange={this.handleNameChange} />
-                    <input type='submit' value='Add New Plant' />
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div>
+            <h3>This is the form</h3>
+            <pre>{JSON.stringify(newPlant)}</pre>
+            <form onSubmit={addNewPlant}>
+                <input type='text' value={newPlant.name} onChange={handleNameChange} />
+                <input type='submit' value='Add New Plant' />
+            </form>
+        </div>
+    );
 }
 
 
-export default connect(mapStateToProps)(NewPlantForm);
+export default NewPlantForm;
