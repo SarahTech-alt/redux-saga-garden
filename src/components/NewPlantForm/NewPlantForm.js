@@ -6,7 +6,7 @@ const NewPlantForm = () => {
     let [newPlant, setPlant] = useState({id: 4, name: ''});
 
     const handleNameChange = (event) => {
-        console.log('event happended')
+        console.log('event happened')
         setPlant({...newPlant, name: event.target.value})
     }
 
