@@ -6,7 +6,6 @@
   "dependencies": {
     "axios": "^0.21.1",
     "body-parser": "^1.18.2",
-    "dd": "^0.6.0",
     "express": "^4.16.3",
     "pg": "^8.2.1",
     "react": "^17.0.1",
