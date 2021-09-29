@@ -6,6 +6,10 @@ import logger from 'redux-logger';
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
 import App from './App';
+import axios from 'axios';
+
+
+const sagaMiddleware = createSagaMiddleware();
 
 // this startingPlantArray should eventually be removed
 const startingPlantArray = [
@@ -17,19 +21,34 @@ const startingPlantArray = [
 const plantList = (state = startingPlantArray, action) => {
   switch (action.type) {
     case 'ADD_PLANT':
-      return [ ...state, action.payload ]
+      return [...state, action.payload]
     default:
       return state;
   }
 };
 
+// Create an axios request
+// to get plants from the server
+// then dispatch to plantList reducer
+function* fetchPlants() {
+  console.log('in fetch plants');
+  yield axios.get('/api/plant')
+  yield put({ type: 'ADD_PLANT' })
+}
+
+// Listens for dispatch actions
+// then calls corresponding function
 function* watcherSaga() {
   yield takeEvery('FETCH_PLANTS', fetchPlants)
 }
 
+
 const store = createStore(
   combineReducers({ plantList }),
-  applyMiddleware( createSagaMiddleware, logger ),
+  applyMiddleware( sagaMiddleware, logger),
 );
+
+// Creates listener for watcherSaga
+sagaMiddleware.run(watcherSaga);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('react-root'));

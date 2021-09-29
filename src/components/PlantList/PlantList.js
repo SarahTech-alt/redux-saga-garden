@@ -7,9 +7,11 @@ function PlantList() {
 
     const reduxState = useSelector(store => store);
 
+        // on page load dispatch 'FETCH_PLANTS'
+        // event to watcherSaga on index.js
     useEffect(() => {
         console.log('component did mount');
-        // dispatch an action to request the plantList from the API
+        dispatch({type:'FETCH_PLANTS'})
     }, []); 
 
     return (
