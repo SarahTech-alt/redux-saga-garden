@@ -18,7 +18,7 @@ const startingPlantArray = [
   { id: 3, name: 'Oak' }
 ];
 
-const plantList = (state = startingPlantArray, action) => {
+const plantList = (state = [], action) => {
   switch (action.type) {
     case 'ADD_PLANT':
       return [...state, action.payload]
@@ -32,14 +32,22 @@ const plantList = (state = startingPlantArray, action) => {
 // then dispatch to plantList reducer
 function* fetchPlants() {
   console.log('in fetch plants');
-  yield axios.get('/api/plant')
-  yield put({ type: 'ADD_PLANT' })
+  const plantsResponse = yield axios.get('/api/plant')
+  yield put({type:'ADD_PLANT', payload: plantsResponse.data })
+}
+
+function* addNewPlant(action) {
+  console.log('in add plant', action);
+  const newPlant = action.payload;
+  yield axios.post('/api/plant', newPlant)
+  yield put({type: 'FETCH_PLANTS'})
 }
 
 // Listens for dispatch actions
 // then calls corresponding function
 function* watcherSaga() {
   yield takeEvery('FETCH_PLANTS', fetchPlants)
+  yield takeEvery('ADD_NEW_PLANT', addNewPlant)
 }
 
 

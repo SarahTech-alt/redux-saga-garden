@@ -24,6 +24,8 @@ router.get('/details/:id', (req, res) => {
 });
 
 router.post('/', (req, res) => {
+  console.log(req.body);
+  
   const newPlant = req.body;
   const queryText = `INSERT INTO plant ("name", "kingdom", "clade", "order", "family", "subfamily", "genus")
                     VALUES ($1, $2, $3, $4, $5, $6, $7)`;
@@ -47,7 +49,7 @@ router.post('/', (req, res) => {
 router.put('/', (req, res) => {
   const updatedPlant = req.body;
 
-  const queryText = `UPDATE table_name
+  const queryText = `UPDATE plant
   SET "name" = $1, 
   "kingdom" = $2, 
   "clade" = $3, 
@@ -55,7 +57,7 @@ router.put('/', (req, res) => {
   "family" = $5, 
   "subfamily" = $6, 
   "genus" = $7
-  WHERE id=$8;`;
+  WHERE id = $8;`;
 
   const queryValues = [
     updatedPlant.name,

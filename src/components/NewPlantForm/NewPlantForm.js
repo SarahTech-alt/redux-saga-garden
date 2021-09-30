@@ -5,7 +5,14 @@ const NewPlantForm = () => {
     const dispatch = useDispatch();
 
     //Initial state is an OBJECT, with keys id and name
-    let [newPlant, setPlant] = useState({ id: 4, name: '', kingdom: '', clade: '', order: '', family: '', subfamily: '', genus: '' });
+    let [newPlant, setPlant] = useState({ 
+    name: '',
+    kingdom: '', 
+    clade: '', 
+    order: '', 
+    family: '', 
+    subfamily: '', 
+    genus: '' });
 
     // const handleNameChange = (event) => {
     //     event.preventDefault();
@@ -14,11 +21,14 @@ const NewPlantForm = () => {
     //     setPlant({ ...newPlant, name: event.target.value })
     // }
 
-    const addNewPlant = event => {
+    const addNewPlant = () => {
         event.preventDefault();
-        dispatch({ type: 'ADD_PLANT', payload: newPlant });
+        // setPlant({ ...newPlant, id: newPlant.id + 1 });
+        dispatch({ 
+            type: 'ADD_NEW_PLANT', 
+            payload: newPlant });
         //updates the next plant to have a new id
-        setPlant({ id: newPlant.id + 1, name: '' });
+
     }
     return (
         <div>
