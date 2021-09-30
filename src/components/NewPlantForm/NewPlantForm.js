@@ -7,6 +7,14 @@ const NewPlantForm = () => {
     //Initial state is an OBJECT, with keys id and name
     let [newPlant, setPlant] = useState({id: 4, name: ''});
 
+    const handleKingdomChange = (event) => {
+        setPlant({...newPlant, kingdom: event.target.value})
+    }
+
+    const handleCladeChange = (event) => {
+        setPlant({...newPlant, clade: event.target.value})
+    }
+
     const handleNameChange = (event) => {
         console.log('event happened');
         //Similar to in redux -- we dont want to get rid of the id field when we update name
@@ -25,6 +33,8 @@ const NewPlantForm = () => {
             <pre>{JSON.stringify(newPlant)}</pre>
             <form onSubmit={addNewPlant}>
                 <input type='text' value={newPlant.name} onChange={handleNameChange} />
+                <input type='text' value={newPlant.kingdom} placeholder='Kingdom' onChange={handleKingdomChange} />
+                <input type='text' value={newPlant.clade} placeholder='Clade' onChange={handleCladeChange} />
                 <input type='submit' value='Add New Plant' />
             </form>
         </div>
