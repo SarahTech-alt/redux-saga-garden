@@ -14,12 +14,7 @@ const NewPlantForm = () => {
     subfamily: '', 
     genus: '' });
 
-    // const handleNameChange = (event) => {
-    //     event.preventDefault();
-    //     console.log('event happened');
-    //     //Similar to in redux -- we dont want to get rid of the id field when we update name
-    //     setPlant({ ...newPlant, name: event.target.value })
-    // }
+    
 
     const addNewPlant = () => {
         event.preventDefault();
@@ -28,7 +23,7 @@ const NewPlantForm = () => {
             type: 'ADD_NEW_PLANT', 
             payload: newPlant });
         //updates the next plant to have a new id
-
+            setPlant('');
     }
     return (
         <div>

@@ -14,13 +14,19 @@ function PlantList() {
         dispatch({type:'FETCH_PLANTS'})
     }, []); 
 
+    const deletePlant = (plantId) => {
+        
+        dispatch({type: 'DELETE_PLANT', payload: plantId})
+    }
     return (
         <div>
             <h3>This is the plant list</h3>
             <pre>{JSON.stringify(plantList)}</pre><br />
             <ul>
-                {plantList.map(plant =>
-                <li key={plant.id}>PlantName: {plant.name}
+                {plantList.map((plant) =>
+                <li key={plant.id}>
+                    Plant Name: {plant.name}  
+                    <button onClick={(event) => deletePlant(plant.id)}>Delete</button>
                 </li>
                 )}
             </ul>

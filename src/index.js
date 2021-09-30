@@ -11,17 +11,10 @@ import axios from 'axios';
 
 const sagaMiddleware = createSagaMiddleware();
 
-// this startingPlantArray should eventually be removed
-const startingPlantArray = [
-  { id: 1, name: 'Rose' },
-  { id: 2, name: 'Tulip' },
-  { id: 3, name: 'Oak' }
-];
-
 const plantList = (state = [], action) => {
   switch (action.type) {
     case 'ADD_PLANT':
-      return [...state, action.payload]
+      return action.payload
     default:
       return state;
   }
@@ -43,11 +36,18 @@ function* addNewPlant(action) {
   yield put({type: 'FETCH_PLANTS'})
 }
 
+function* deleteThePlant(action){
+  console.log('in delete plant');
+  yield axios.delete(`/api/plant/${action.payload}`)
+  yield put({type: 'FETCH_PLANTS'})
+}
+
 // Listens for dispatch actions
 // then calls corresponding function
 function* watcherSaga() {
   yield takeEvery('FETCH_PLANTS', fetchPlants)
   yield takeEvery('ADD_NEW_PLANT', addNewPlant)
+  yield takeEvery('DELETE_PLANT', deleteThePlant)
 }
 
 
